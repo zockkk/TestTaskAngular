@@ -1,0 +1,11 @@
+<div
+  class="z-50 absolute right-6 top-6 bg-white border h-4/5 w-1/4 flex flex-col"
+>
+  <span class="text-center w-full text-2xl">Обьекты</span>
+  <input type="text" placeholder="Поиск" class="h-8 border" />
+  <div *ngIf="data_">
+    <div *ngFor="let marker of data_" (click)="onClick(marker)">
+      {{ marker.name }}!
+    </div>
+  </div>
+</div>
