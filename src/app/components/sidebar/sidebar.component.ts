@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit, OnChanges } from '@angular/core';
 import { IObjectResponse } from 'src/app/models/serverResponse.type';
 
 @Component({
@@ -7,10 +7,14 @@ import { IObjectResponse } from 'src/app/models/serverResponse.type';
   styleUrls: ['./sidebar.component.scss'],
 })
 export class SidebarComponent implements OnInit {
-  private data: IObjectResponse[] = [];
-
+  private data: IObjectResponse[] | undefined;
   constructor() {}
 
-  async ngOnInit() {
+  public onClick(marker: IObjectResponse) {
+    console.log(marker.id);
   }
+
+  @Input() data_: IObjectResponse[] | undefined;
+
+  ngOnInit() {}
 }

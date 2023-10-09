@@ -12,14 +12,21 @@ import { IObjectResponse } from 'src/app/models/serverResponse.type';
 })
 export class MapComponent implements AfterViewInit, OnInit {
   private map: L.Map | L.LayerGroup<any> | undefined = undefined;
-  private data: IObjectResponse[] | undefined = undefined;
+  public data: IObjectResponse[] | undefined = undefined;
 
   private async initObjectsData(): Promise<IObjectResponse[]> {
-    const response = await fetch(
-      'https://raw.githubusercontent.com/waliot/test-tasks/master/assets/data/frontend-1-dataset.json'
-    );
-    const result: Promise<IObjectResponse[]> = response.json();
-    return result;
+    try {
+      const response = await fetch(
+        'https://raw.githubusercontent.com/waliot/test-tasks/master/assets/data/frontend-1-dataset.json'
+      );
+      const result: Promise<IObjectResponse[]> = response.json();
+      console.log(result);
+
+      return result;
+    } catch (e) {
+      alert(e + 'Произошла ошибка');
+      return [];
+    }
   }
 
   private initMap(): void {
