@@ -14,9 +14,9 @@ const _markersReduser = createReducer(
   initialState,
   on(getMarkersSuccess, (state, { data }) => ({
     ...state,
-    data: [...state.data, ...data],
+    data: [...data],
   })),
-  on(getMarkersError, (state, { error }) => ({ ...state, posts: [], error }))
+  on(getMarkersError, (state, { error }) => ({ ...state, data: [], error }))
 );
 
 export function markerReduser(state: MarkersState | undefined, action: any) {

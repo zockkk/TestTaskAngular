@@ -8,11 +8,11 @@ import { Injectable } from '@angular/core';
 })
 export class FetchData {
   constructor(private http: HttpClient) {}
+
   private apiUrl =
     'https://raw.githubusercontent.com/waliot/test-tasks/master/assets/data/frontend-1-dataset.json';
-  public getData(): Observable<IObjectResponse[]> {
-    console.log('Пошел запрос!');
 
+  public getData(): Observable<IObjectResponse[]> {
     return this.http.get<IObjectResponse[]>(this.apiUrl);
   }
 }
