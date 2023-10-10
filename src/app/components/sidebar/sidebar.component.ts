@@ -1,4 +1,5 @@
 import { Component, Input, OnInit, OnChanges } from '@angular/core';
+import { Observable } from 'rxjs';
 import { IObjectResponse } from 'src/app/models/serverResponse.type';
 
 @Component({
@@ -14,7 +15,7 @@ export class SidebarComponent implements OnInit {
     console.log(marker.id);
   }
 
-  @Input() data_: IObjectResponse[] | undefined;
+  markers$: Observable<IObjectResponse[]> | undefined;
 
   ngOnInit() {}
 }
