@@ -1,7 +1,11 @@
 import { Component, AfterViewInit, OnInit } from '@angular/core';
+import { Store } from '@ngrx/store';
 
 import * as L from 'leaflet';
+import { Observable } from 'rxjs';
 import { IObjectResponse } from 'src/app/models/serverResponse.type';
+import { getMarkers } from 'src/app/store/data/data.actions';
+import { MarkersState } from 'src/app/store/data/data.reduser';
 
 @Component({
   selector: 'app-map',
@@ -12,24 +16,23 @@ import { IObjectResponse } from 'src/app/models/serverResponse.type';
 })
 export class MapComponent implements AfterViewInit, OnInit {
   private map: L.Map | L.LayerGroup<any> | undefined = undefined;
-  public data: IObjectResponse[] | undefined = undefined;
+  data: IObjectResponse[] | undefined;
 
-  private async initObjectsData(): Promise<IObjectResponse[]> {
-    try {
-      const response = await fetch(
-        'https://raw.githubusercontent.com/waliot/test-tasks/master/assets/data/frontend-1-dataset.json'
-      );
-      const result: Promise<IObjectResponse[]> = response.json();
-      console.log(result);
+  constructor(private store: Store<MarkersState>) {}
 
-      return result;
-    } catch (e) {
-      alert(e + 'Произошла ошибка');
-      return [];
+  public addMarkers() {
+    console.log(this.data);
+    if (this.data && this.map) {
+      console.log('Работает!');
+      for (let marker of this.data) {
+        const newMarker = L.marker([marker.latitude, marker.longitude]).addTo(
+          this.map
+        );
+      }
     }
   }
 
-  private initMap(): void {
+  private async initMap() {
     this.map = L.map('map', {
       center: [39.8282, -98.5795],
 
@@ -49,26 +52,14 @@ export class MapComponent implements AfterViewInit, OnInit {
     );
 
     tiles.addTo(this.map);
+    this.addMarkers();
   }
 
-  public addMarkers() {
-    if (this.data && this.map) {
-      console.log('Работает!');
-      for (let marker of this.data) {
-        const newMarker = L.marker([marker.latitude, marker.longitude]).addTo(
-          this.map
-        );
-      }
-    }
-  }
-
-  constructor() {}
-
-  ngAfterViewInit(): void {
+  ngAfterViewInit() {
     this.initMap();
   }
 
-  async ngOnInit() {
-    this.data = await this.initObjectsData();
+  ngOnInit() {
+    this.store.dispatch(getMarkers());
   }
 }
