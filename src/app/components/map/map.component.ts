@@ -2,7 +2,6 @@ import { Component, AfterViewInit, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 
 import * as L from 'leaflet';
-import { Observable } from 'rxjs';
 import { IObjectResponse } from 'src/app/models/serverResponse.type';
 import { getMarkers } from 'src/app/store/data/data.actions';
 import { MarkersState } from 'src/app/store/data/data.reduser';
@@ -14,25 +13,20 @@ import { MarkersState } from 'src/app/store/data/data.reduser';
 
   styleUrls: ['./map.component.scss'],
 })
-export class MapComponent implements AfterViewInit, OnInit {
+export class MapComponent implements AfterViewInit {
   private map: L.Map | L.LayerGroup<any> | undefined = undefined;
-  data: IObjectResponse[] | undefined;
 
-  constructor(private store: Store<MarkersState>) {}
+  data: IObjectResponse[] | undefined;
+  constructor(private markersStore: Store<{ markers: MarkersState }>) {}
 
   public addMarkers() {
-    console.log(this.data);
     if (this.data && this.map) {
-      console.log('Работает!');
       for (let marker of this.data) {
-        const newMarker = L.marker([marker.latitude, marker.longitude]).addTo(
-          this.map
-        );
+        L.marker([marker.latitude, marker.longitude]).addTo(this.map);
       }
     }
   }
-
-  private async initMap() {
+  private initMap() {
     this.map = L.map('map', {
       center: [39.8282, -98.5795],
 
@@ -52,6 +46,11 @@ export class MapComponent implements AfterViewInit, OnInit {
     );
 
     tiles.addTo(this.map);
+  }
+
+  public OnClick() {
+    console.log(this.data);
+
     this.addMarkers();
   }
 
@@ -60,6 +59,9 @@ export class MapComponent implements AfterViewInit, OnInit {
   }
 
   ngOnInit() {
-    this.store.dispatch(getMarkers());
+    this.markersStore.dispatch(getMarkers());
+    this.markersStore
+      .select((state) => state.markers)
+      .subscribe((markers) => (this.data = markers.data));
   }
 }
