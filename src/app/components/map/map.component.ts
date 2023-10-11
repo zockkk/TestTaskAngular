@@ -1,10 +1,33 @@
-import { Component, AfterViewInit, OnInit } from '@angular/core';
+import {
+  Component,
+  AfterViewInit,
+  OnInit,
+  OnChanges,
+  SimpleChanges,
+} from '@angular/core';
 import { Store } from '@ngrx/store';
 
 import * as L from 'leaflet';
 import { IObjectResponse } from 'src/app/models/serverResponse.type';
-import { getMarkers } from 'src/app/store/data/data.actions';
 import { MarkersState } from 'src/app/store/data/data.reduser';
+import { MarkerServise } from 'src/app/services/map.service.';
+import { Observable } from 'rxjs';
+
+const iconRetinaUrl = 'assets/marker-icon-2x.png';
+const iconUrl = 'assets/marker-icon.png';
+const shadowUrl = 'assets/marker-shadow.png';
+const iconDefault = L.icon({
+  iconRetinaUrl,
+  iconUrl,
+  shadowUrl,
+  iconSize: [25, 41],
+  iconAnchor: [12, 41],
+  popupAnchor: [1, -34],
+  tooltipAnchor: [16, -28],
+  shadowSize: [41, 41],
+});
+
+L.Marker.prototype.options.icon = iconDefault;
 
 @Component({
   selector: 'app-map',
@@ -14,10 +37,13 @@ import { MarkersState } from 'src/app/store/data/data.reduser';
   styleUrls: ['./map.component.scss'],
 })
 export class MapComponent implements AfterViewInit {
-  private map: L.Map | L.LayerGroup<any> | undefined = undefined;
+  map: L.Map;
 
   data: IObjectResponse[] | undefined;
-  constructor(private markersStore: Store<{ markers: MarkersState }>) {}
+  constructor(
+    private markersStore: Store<{ markers: MarkersState }>,
+    private markerService: MarkerServise
+  ) {}
 
   public addMarkers() {
     if (this.data && this.map) {
@@ -48,20 +74,10 @@ export class MapComponent implements AfterViewInit {
     tiles.addTo(this.map);
   }
 
-  public OnClick() {
-    console.log(this.data);
-
-    this.addMarkers();
-  }
-
   ngAfterViewInit() {
     this.initMap();
+    this.markerService.getMarkersFromServer(this.map);
   }
 
-  ngOnInit() {
-    this.markersStore.dispatch(getMarkers());
-    this.markersStore
-      .select((state) => state.markers)
-      .subscribe((markers) => (this.data = markers.data));
-  }
+  ngOnInit() {}
 }
