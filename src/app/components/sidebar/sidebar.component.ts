@@ -1,10 +1,22 @@
-import { Component, Input, OnInit, AfterViewInit } from '@angular/core';
+import {
+  Component,
+  Input,
+  OnInit,
+  AfterViewInit,
+  OnChanges,
+  SimpleChanges,
+} from '@angular/core';
 import { Store, StoreModule } from '@ngrx/store';
 import { IObjectResponse } from 'src/app/models/serverResponse.type';
 import { MarkerServise } from 'src/app/services/map.service.';
-import { getMarkers, selectMarker } from 'src/app/store/data/data.actions';
+import {
+  filterMarkers,
+  getMarkers,
+  selectId,
+} from 'src/app/store/data/data.actions';
 import { MarkersState } from 'src/app/store/data/data.reduser';
 import * as L from 'leaflet';
+import { Observable, filter } from 'rxjs';
 
 @Component({
   selector: 'app-sidebar',
@@ -13,13 +25,21 @@ import * as L from 'leaflet';
 })
 export class SidebarComponent {
   @Input() _map: L.Map;
+  tern: string = '';
   data: IObjectResponse[] | undefined;
+  selectedMarkerId: number;
   constructor(
     private markersStore: Store<{ markers: MarkersState }>,
     private markerServise: MarkerServise
   ) {}
 
+  onInput() {
+    this.markersStore.dispatch(filterMarkers({ value: this.tern }));
+  }
+
   onClickObject(marker: IObjectResponse) {
+    this.markersStore.dispatch(selectId({ id: marker.id }));
+    this.selectedMarkerId = marker.id;
     this.markerServise.makeSelectedCircleMarkers(
       this._map,
       marker.latitude,
@@ -31,6 +51,11 @@ export class SidebarComponent {
     this.markersStore.dispatch(getMarkers());
     this.markersStore
       .select((state) => state.markers)
-      .subscribe((markers) => (this.data = markers.data));
+      .subscribe((markers) => {
+        this.data = markers.filteredData;
+      });
+    this.markersStore
+      .select((state) => state.markers)
+      .subscribe((markers) => (this.selectedMarkerId = markers.id));
   }
 }

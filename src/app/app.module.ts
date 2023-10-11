@@ -12,10 +12,12 @@ import { HttpClientModule } from '@angular/common/http';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { MarkerServise } from './services/map.service.';
 import { DataEffects } from './store/data/data.effetc';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [AppComponent, MapComponent, SidebarComponent],
   imports: [
+    FormsModule,
     BrowserModule,
     StoreModule.forRoot({ markers: markerReduser }),
     EffectsModule.forRoot([DataEffects]),

@@ -13,7 +13,12 @@ export const getMarkersError = createAction(
   props<{ error: any }>()
 );
 
-export const selectMarker = createAction(
-  '[Data] Select Marker',
+export const selectId = createAction(
+  '[Data] Select Id',
   props<{ id: number }>()
+);
+
+export const filterMarkers = createAction(
+  '[Data] Filter Data',
+  props<{ value: string }>()
 );
