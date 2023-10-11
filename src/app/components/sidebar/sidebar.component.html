@@ -6,8 +6,8 @@
   <div *ngIf="data" class="flex flex-col items-center gap-2">
     <span
       *ngFor="let marker of data"
-      (click)="onClickObject(marker.id)"
       class="border w-full text-center"
+      (click)="onClickObject(marker)"
     >
       Name: {{ marker.name }}, Id: {{ marker.id }}
     </span>

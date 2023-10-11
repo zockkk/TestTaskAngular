@@ -13,4 +13,7 @@ export const getMarkersError = createAction(
   props<{ error: any }>()
 );
 
-export const selectMarker = createAction('[Data] Select Marker');
+export const selectMarker = createAction(
+  '[Data] Select Marker',
+  props<{ id: number }>()
+);
