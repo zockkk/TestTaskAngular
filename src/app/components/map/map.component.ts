@@ -28,13 +28,16 @@ L.Marker.prototype.options.icon = iconDefault;
   styleUrls: ['./map.component.scss'],
 })
 export class MapComponent implements OnInit {
+  
   map: L.Map;
   data: IObjectResponse[] | undefined;
   selectedMarkerId: number;
+
   constructor(
     private markerService: MarkerServise,
     private markersStore: Store<{ markers: MarkersState }>
   ) {}
+
   private initMap() {
     this.map = L.map('map', {
       center: [39.8282, -98.5795],
