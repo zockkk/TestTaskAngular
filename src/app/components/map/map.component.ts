@@ -3,7 +3,6 @@ import { Store } from '@ngrx/store';
 
 import * as L from 'leaflet';
 import { IObjectResponse } from 'src/app/models/serverResponse.type';
-import { MarkersState } from 'src/app/store/data/data.reduser';
 import { MarkerServise } from 'src/app/services/map.service';
 
 const iconRetinaUrl = 'assets/images/marker-icon-2x.png';
@@ -28,15 +27,10 @@ L.Marker.prototype.options.icon = iconDefault;
   styleUrls: ['./map.component.scss'],
 })
 export class MapComponent implements OnInit {
-  
   map: L.Map;
-  data: IObjectResponse[] | undefined;
-  selectedMarkerId: number;
+  data: IObjectResponse[];
 
-  constructor(
-    private markerService: MarkerServise,
-    private markersStore: Store<{ markers: MarkersState }>
-  ) {}
+  constructor(private markerService: MarkerServise) {}
 
   private initMap() {
     this.map = L.map('map', {
@@ -60,8 +54,5 @@ export class MapComponent implements OnInit {
   ngOnInit() {
     this.initMap();
     this.markerService.getMarkersFromServer(this.map);
-    this.markersStore
-      .select((state) => state.markers)
-      .subscribe((markers) => (this.selectedMarkerId = markers.id));
   }
 }
