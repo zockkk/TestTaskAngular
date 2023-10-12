@@ -18,3 +18,9 @@
   z-index: 20;
   height: 100%;
 }
+
+@media screen and (max-width: 720px) {
+  .map-frame {
+    height: 50%;
+  }
+}

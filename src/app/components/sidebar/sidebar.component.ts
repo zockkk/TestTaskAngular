@@ -39,12 +39,26 @@ export class SidebarComponent {
 
   onClickObject(marker: IObjectResponse) {
     this.markersStore.dispatch(selectId({ id: marker.id }));
+    if (this.selectedMarkerId !== -1) {
+      const oldMarker = this.data.find(
+        (marker) => marker.id === this.selectedMarkerId
+      );
+      this.markerServise.makeSelectedCircleMarkers(
+        this._map,
+        marker.latitude,
+        marker.longitude,
+        oldMarker.latitude,
+        oldMarker.longitude
+      );
+    } else {
+      this.markerServise.makeSelectedCircleMarkers(
+        this._map,
+        marker.latitude,
+        marker.longitude
+      );
+    }
+
     this.selectedMarkerId = marker.id;
-    this.markerServise.makeSelectedCircleMarkers(
-      this._map,
-      marker.latitude,
-      marker.longitude
-    );
   }
 
   ngOnInit() {

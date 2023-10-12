@@ -19,10 +19,20 @@ export class MarkerServise {
   private apiUrl =
     'https://raw.githubusercontent.com/waliot/test-tasks/master/assets/data/frontend-1-dataset.json';
 
-  makeSelectedCircleMarkers(map: L.Map, lat: number, lon: number) {
+  makeSelectedCircleMarkers(
+    map: L.Map,
+    lat: number,
+    lon: number,
+    latOld?: number,
+    lonOld?: number
+  ) {
     map.setView([lat, lon], 10);
-    const circle = L.circleMarker([lat, lon]);
-    circle.addTo(map);
+    L.circleMarker([lat, lon]).addTo(map);
+  }
+
+  clearCircle(circle: L.CircleMarker<any>) {
+    console.log('Зашло в clear функцию!');
+    circle.remove();
   }
 
   getMarkersFromServer(map: L.Map) {
@@ -31,9 +41,11 @@ export class MarkerServise {
         const lon = c.longitude;
         const lat = c.latitude;
         const marker = L.marker([lat, lon]);
-        marker.addTo(map).on('click', () => {
+        marker.addTo(map);
+        marker.on('click', () => {
           map.setView([lat, lon], 10);
           const circle = L.circleMarker([lat, lon]);
+          this.clearCircle(circle);
           circle.addTo(map);
           this.store.dispatch(selectId({ id: c.id }));
         });

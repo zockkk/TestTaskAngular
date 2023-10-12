@@ -6,9 +6,9 @@ import { IObjectResponse } from 'src/app/models/serverResponse.type';
 import { MarkersState } from 'src/app/store/data/data.reduser';
 import { MarkerServise } from 'src/app/services/map.service.';
 
-const iconRetinaUrl = 'assets/marker-icon-2x.png';
-const iconUrl = 'assets/marker-icon.png';
-const shadowUrl = 'assets/marker-shadow.png';
+const iconRetinaUrl = 'assets/images/marker-icon-2x.png';
+const iconUrl = 'assets/images/marker-icon.png';
+const shadowUrl = 'assets/images/marker-shadow.png';
 const iconDefault = L.icon({
   iconRetinaUrl,
   iconUrl,
@@ -28,13 +28,16 @@ L.Marker.prototype.options.icon = iconDefault;
   styleUrls: ['./map.component.scss'],
 })
 export class MapComponent implements OnInit {
+  
   map: L.Map;
   data: IObjectResponse[] | undefined;
   selectedMarkerId: number;
+
   constructor(
     private markerService: MarkerServise,
     private markersStore: Store<{ markers: MarkersState }>
   ) {}
+
   private initMap() {
     this.map = L.map('map', {
       center: [39.8282, -98.5795],

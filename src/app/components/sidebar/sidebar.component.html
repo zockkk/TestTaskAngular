@@ -1,24 +1,24 @@
-<div
-  class="sidebarContainer z-50 absolute right-6 top-6 bg-white border h-4/5 w-80 flex flex-col"
->
-  <span class="text-center w-full text-3xl mt-2 mb-2">Обьекты</span>
+<div class="sidebar">
+  <span class="sidebar-name">Обьекты</span>
   <input
     type="text"
     placeholder="Поиск по названию"
-    class="h-10 sidebarInput text-2xl text-center border"
+    class="sidebar-input"
     [(ngModel)]="tern"
     (input)="onInput()"
   />
-  <div *ngIf="data" class="flex flex-col items-center">
+  <div *ngIf="data" class="sidebar-object-container">
     <div
       *ngFor="let marker of data"
-      class="border w-full text-center cursor-pointer text-xl"
+      class="sizebar-object"
       [ngClass]="{
         'bg-yellow-400': marker.id === selectedMarkerId
       }"
       (click)="onClickObject(marker)"
     >
-      {{ marker.name }}
+      <img class="sidebar-object-img" src="../../../assets/images/car.svg" />{{
+        marker.name
+      }}
     </div>
   </div>
 </div>
