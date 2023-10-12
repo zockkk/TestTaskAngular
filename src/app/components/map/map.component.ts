@@ -4,7 +4,7 @@ import { Store } from '@ngrx/store';
 import * as L from 'leaflet';
 import { IObjectResponse } from 'src/app/models/serverResponse.type';
 import { MarkersState } from 'src/app/store/data/data.reduser';
-import { MarkerServise } from 'src/app/services/map.service.';
+import { MarkerServise } from 'src/app/services/map.service';
 
 const iconRetinaUrl = 'assets/images/marker-icon-2x.png';
 const iconUrl = 'assets/images/marker-icon.png';

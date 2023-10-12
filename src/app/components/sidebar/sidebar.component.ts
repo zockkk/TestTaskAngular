@@ -8,7 +8,7 @@ import {
 } from '@angular/core';
 import { Store, StoreModule } from '@ngrx/store';
 import { IObjectResponse } from 'src/app/models/serverResponse.type';
-import { MarkerServise } from 'src/app/services/map.service.';
+import { MarkerServise } from 'src/app/services/map.service';
 import {
   filterMarkers,
   getMarkers,
@@ -46,9 +46,7 @@ export class SidebarComponent {
       this.markerServise.makeSelectedCircleMarkers(
         this._map,
         marker.latitude,
-        marker.longitude,
-        oldMarker.latitude,
-        oldMarker.longitude
+        marker.longitude
       );
     } else {
       this.markerServise.makeSelectedCircleMarkers(

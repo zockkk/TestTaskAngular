@@ -23,16 +23,9 @@ export class MarkerServise {
     map: L.Map,
     lat: number,
     lon: number,
-    latOld?: number,
-    lonOld?: number
   ) {
     map.setView([lat, lon], 10);
     L.circleMarker([lat, lon]).addTo(map);
-  }
-
-  clearCircle(circle: L.CircleMarker<any>) {
-    console.log('Зашло в clear функцию!');
-    circle.remove();
   }
 
   getMarkersFromServer(map: L.Map) {
@@ -45,7 +38,6 @@ export class MarkerServise {
         marker.on('click', () => {
           map.setView([lat, lon], 10);
           const circle = L.circleMarker([lat, lon]);
-          this.clearCircle(circle);
           circle.addTo(map);
           this.store.dispatch(selectId({ id: c.id }));
         });
