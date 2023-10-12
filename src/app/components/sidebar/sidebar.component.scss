@@ -1,24 +1,82 @@
-.sidebarContainer {
+.sidebar {
   color: #000;
   font-family: Roboto;
   font-size: 13px;
   font-style: normal;
   font-weight: 400;
   line-height: normal;
-}
-
-.sidebar {
   z-index: 999;
   position: absolute;
-  right: 3rem;
-  top: 3rem;
+  right: 2rem;
+  top: 2rem;
   background-color: white;
   height: 85%;
   width: 20%;
   border-radius: 10px;
 }
 
-.sidebarInput {
-  background-color: #f2f2f2;
+.sidebar-name {
   color: #000;
+  font-family: Roboto;
+  font-size: 24px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  padding: 15px;
+}
+
+.sidebar-input {
+  padding-left: 15px;
+  width: 100%;
+  height: 33px;
+  flex-shrink: 0;
+  background-color: #f2f2f2;
+}
+
+.sidebar-input::placeholder {
+  color: #000;
+}
+
+.sizebar-object {
+  padding-left: 15px;
+  height: 30px;
+  width: 100%;
+  cursor: pointer;
+  color: #000;
+  font-family: Roboto;
+  font-size: 11px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  flex-shrink: 0;
+  border-width: 1px;
+  align-items: center;
+}
+
+.sidebar-object-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.sidebar-object-img {
+  height: 15px;
+}
+
+@media screen and (max-width: 720px) {
+  .sidebar {
+    right: 0px;
+    top: 50%;
+    height: 50%;
+    width: 100%;
+    overflow: auto;
+    border-radius: 0;
+  }
+
+  .sidebar-object-container {
+    column-count: 2;
+  }
 }

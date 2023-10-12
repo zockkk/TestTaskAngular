@@ -6,9 +6,9 @@ import { IObjectResponse } from 'src/app/models/serverResponse.type';
 import { MarkersState } from 'src/app/store/data/data.reduser';
 import { MarkerServise } from 'src/app/services/map.service.';
 
-const iconRetinaUrl = 'assets/marker-icon-2x.png';
-const iconUrl = 'assets/marker-icon.png';
-const shadowUrl = 'assets/marker-shadow.png';
+const iconRetinaUrl = 'assets/images/marker-icon-2x.png';
+const iconUrl = 'assets/images/marker-icon.png';
+const shadowUrl = 'assets/images/marker-shadow.png';
 const iconDefault = L.icon({
   iconRetinaUrl,
   iconUrl,
