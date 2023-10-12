@@ -1,15 +1,24 @@
 <div
-  class="z-50 absolute right-6 top-6 bg-white border h-4/5 w-1/4 flex flex-col"
+  class="sidebarContainer z-50 absolute right-6 top-6 bg-white border h-4/5 w-80 flex flex-col"
 >
-  <span class="text-center w-full text-2xl">Обьекты</span>
-  <input type="text" placeholder="Поиск" class="h-8 border" />
-  <div *ngIf="data" class="flex flex-col items-center gap-2">
-    <span
+  <span class="text-center w-full text-3xl mt-2 mb-2">Обьекты</span>
+  <input
+    type="text"
+    placeholder="Поиск по названию"
+    class="h-10 sidebarInput text-2xl text-center border"
+    [(ngModel)]="tern"
+    (input)="onInput()"
+  />
+  <div *ngIf="data" class="flex flex-col items-center">
+    <div
       *ngFor="let marker of data"
-      class="border w-full text-center"
+      class="border w-full text-center cursor-pointer text-xl"
+      [ngClass]="{
+        'bg-yellow-400': marker.id === selectedMarkerId
+      }"
       (click)="onClickObject(marker)"
     >
-      Name: {{ marker.name }}, Id: {{ marker.id }}
-    </span>
+      {{ marker.name }}
+    </div>
   </div>
 </div>

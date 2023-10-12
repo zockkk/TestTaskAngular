@@ -1,17 +1,10 @@
-import {
-  Component,
-  AfterViewInit,
-  OnInit,
-  OnChanges,
-  SimpleChanges,
-} from '@angular/core';
+import { Component, AfterViewInit, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 
 import * as L from 'leaflet';
 import { IObjectResponse } from 'src/app/models/serverResponse.type';
 import { MarkersState } from 'src/app/store/data/data.reduser';
 import { MarkerServise } from 'src/app/services/map.service.';
-import { Observable } from 'rxjs';
 
 const iconRetinaUrl = 'assets/marker-icon-2x.png';
 const iconUrl = 'assets/marker-icon.png';
@@ -31,31 +24,20 @@ L.Marker.prototype.options.icon = iconDefault;
 
 @Component({
   selector: 'app-map',
-
   templateUrl: './map.component.html',
-
   styleUrls: ['./map.component.scss'],
 })
-export class MapComponent implements AfterViewInit {
+export class MapComponent implements OnInit {
   map: L.Map;
-
   data: IObjectResponse[] | undefined;
+  selectedMarkerId: number;
   constructor(
-    private markersStore: Store<{ markers: MarkersState }>,
-    private markerService: MarkerServise
+    private markerService: MarkerServise,
+    private markersStore: Store<{ markers: MarkersState }>
   ) {}
-
-  public addMarkers() {
-    if (this.data && this.map) {
-      for (let marker of this.data) {
-        L.marker([marker.latitude, marker.longitude]).addTo(this.map);
-      }
-    }
-  }
   private initMap() {
     this.map = L.map('map', {
       center: [39.8282, -98.5795],
-
       zoom: 3,
     });
 
@@ -63,9 +45,7 @@ export class MapComponent implements AfterViewInit {
       'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
       {
         maxZoom: 18,
-
         minZoom: 3,
-
         attribution:
           '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
       }
@@ -74,10 +54,11 @@ export class MapComponent implements AfterViewInit {
     tiles.addTo(this.map);
   }
 
-  ngAfterViewInit() {
+  ngOnInit() {
     this.initMap();
     this.markerService.getMarkersFromServer(this.map);
+    this.markersStore
+      .select((state) => state.markers)
+      .subscribe((markers) => (this.selectedMarkerId = markers.id));
   }
-
-  ngOnInit() {}
 }
