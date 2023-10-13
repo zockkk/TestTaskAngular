@@ -1,11 +1,7 @@
 import { createReducer, on } from '@ngrx/store';
-import {
-  IObjectResponse,
-  MarkersState,
-} from 'src/app/models/serverResponse.type';
+import { MarkersState } from 'src/app/models/serverResponse.type';
 import {
   filterMarkers,
-  getMarkers,
   getMarkersError,
   getMarkersSuccess,
   selectId,
