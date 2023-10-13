@@ -1,18 +1,30 @@
 import { TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { SidebarComponent } from './sidebar.component';
-import { Store } from '@ngrx/store';
-import { MarkersState } from 'src/app/models/serverResponse.type';
 import { MarkerService } from 'src/app/services/map.service';
+import { MockStore, provideMockStore } from '@ngrx/store/testing';
+import { HttpClient } from '@angular/common/http';
+import {
+  HttpClientTestingModule,
+  HttpTestingController,
+} from '@angular/common/http/testing';
 
 describe('SidebarComponent', () => {
-  let markersStore: Store<{ markers: MarkersState }>;
+  let store: MockStore;
   let markerServise: MarkerService;
+  let httpClient: HttpClient;
+  let httpTestingController: HttpTestingController;
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [RouterTestingModule, markerServise, markersStore],
+      imports: [RouterTestingModule, HttpClientTestingModule],
+      providers: [MarkerService, provideMockStore()],
       declarations: [SidebarComponent],
     }).compileComponents();
+
+    markerServise = TestBed.inject(MarkerService);
+    httpClient = TestBed.inject(HttpClient);
+    httpTestingController = TestBed.inject(HttpTestingController);
+    store = TestBed.inject(MockStore);
   });
 
   it('should create the sidebar', () => {
