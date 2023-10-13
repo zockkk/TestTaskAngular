@@ -1,22 +1,10 @@
-import {
-  Component,
-  Input,
-  OnInit,
-  AfterViewInit,
-  OnChanges,
-  SimpleChanges,
-} from '@angular/core';
-import { Store, StoreModule } from '@ngrx/store';
+import { Component, Input } from '@angular/core';
+import { Store } from '@ngrx/store';
 import { IObjectResponse } from 'src/app/models/serverResponse.type';
 import { MarkerServise } from 'src/app/services/map.service';
-import {
-  filterMarkers,
-  getMarkers,
-  selectId,
-} from 'src/app/store/data/data.actions';
+import { filterMarkers, getMarkers } from 'src/app/store/data/data.actions';
 import { MarkersState } from 'src/app/models/serverResponse.type';
 import * as L from 'leaflet';
-import { Observable, filter } from 'rxjs';
 
 @Component({
   selector: 'app-sidebar',
@@ -42,7 +30,7 @@ export class SidebarComponent {
       marker.id,
       this._map,
       marker.latitude,
-      marker.longitude,
+      marker.longitude
     );
   }
 
