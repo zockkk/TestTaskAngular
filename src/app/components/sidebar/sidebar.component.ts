@@ -8,13 +8,13 @@ import {
 } from '@angular/core';
 import { Store, StoreModule } from '@ngrx/store';
 import { IObjectResponse } from 'src/app/models/serverResponse.type';
-import { MarkerServise } from 'src/app/services/map.service.';
+import { MarkerServise } from 'src/app/services/map.service';
 import {
   filterMarkers,
   getMarkers,
   selectId,
 } from 'src/app/store/data/data.actions';
-import { MarkersState } from 'src/app/store/data/data.reduser';
+import { MarkersState } from 'src/app/models/serverResponse.type';
 import * as L from 'leaflet';
 import { Observable, filter } from 'rxjs';
 
@@ -38,27 +38,12 @@ export class SidebarComponent {
   }
 
   onClickObject(marker: IObjectResponse) {
-    this.markersStore.dispatch(selectId({ id: marker.id }));
-    if (this.selectedMarkerId !== -1) {
-      const oldMarker = this.data.find(
-        (marker) => marker.id === this.selectedMarkerId
-      );
-      this.markerServise.makeSelectedCircleMarkers(
-        this._map,
-        marker.latitude,
-        marker.longitude,
-        oldMarker.latitude,
-        oldMarker.longitude
-      );
-    } else {
-      this.markerServise.makeSelectedCircleMarkers(
-        this._map,
-        marker.latitude,
-        marker.longitude
-      );
-    }
-
-    this.selectedMarkerId = marker.id;
+    this.markerServise.makeSelectedCircleMarkers(
+      marker.id,
+      this._map,
+      marker.latitude,
+      marker.longitude,
+    );
   }
 
   ngOnInit() {

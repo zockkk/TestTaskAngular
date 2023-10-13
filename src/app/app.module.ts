@@ -9,7 +9,7 @@ import { EffectsModule } from '@ngrx/effects';
 import { markerReduser } from './store/data/data.reduser';
 import { HttpClientModule } from '@angular/common/http';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
-import { MarkerServise } from './services/map.service.';
+import { MarkerServise } from './services/map.service';
 import { DataEffects } from './store/data/data.effetc';
 import { FormsModule } from '@angular/forms';
 
