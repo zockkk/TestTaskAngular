@@ -1,10 +1,10 @@
-import { Component, AfterViewInit, OnInit } from '@angular/core';
-import { Store } from '@ngrx/store';
+import { Component, OnInit } from '@angular/core';
 
 import * as L from 'leaflet';
 import { IObjectResponse } from 'src/app/models/serverResponse.type';
 import { MarkerService } from 'src/app/services/map.service';
 
+// Инициализация иконок для маркеров
 const iconRetinaUrl = 'assets/images/marker-icon-2x.png';
 const iconUrl = 'assets/images/marker-icon.png';
 const shadowUrl = 'assets/images/marker-shadow.png';

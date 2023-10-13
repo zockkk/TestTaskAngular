@@ -4,7 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import * as L from 'leaflet';
 import { Store } from '@ngrx/store';
-import { MarkersState } from '../models/serverResponse.type';
+import { MarkersState } from '../store/data/data.reducer';
 import { selectId } from '../store/data/data.actions';
 
 @Injectable({
@@ -31,23 +31,25 @@ export class MarkerService {
   }
 
   getMarkersFromServer(map: L.Map) {
-    this.http.get(this.apiUrl).subscribe((res: IObjectResponse[]) => {
-      for (const c of res) {
-        const lon = c.longitude;
-        const lat = c.latitude;
-        const marker = L.marker([lat, lon]);
-        marker.on('click', () => {
-          map.setView([lat, lon], 10);
-          this.store.dispatch(selectId({ id: c.id }));
-          if (this.selectedMarker) {
-            this.selectedMarker.remove();
-          }
-          this.selectedMarker = L.circleMarker([lat, lon]);
-          this.selectedMarker.addTo(map);
-        });
-        marker.addTo(map);
-      }
-    });
+    this.http
+      .get<IObjectResponse[]>(this.apiUrl)
+      .subscribe((res: IObjectResponse[]) => {
+        for (const c of res) {
+          const lon = c.longitude;
+          const lat = c.latitude;
+          const marker = L.marker([lat, lon]);
+          marker.on('click', () => {
+            map.setView([lat, lon], 10);
+            this.store.dispatch(selectId({ id: c.id }));
+            if (this.selectedMarker) {
+              this.selectedMarker.remove();
+            }
+            this.selectedMarker = L.circleMarker([lat, lon]);
+            this.selectedMarker.addTo(map);
+          });
+          marker.addTo(map);
+        }
+      });
   }
 
   getData(): Observable<IObjectResponse[]> {

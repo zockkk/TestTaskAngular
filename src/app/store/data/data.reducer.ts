@@ -1,11 +1,17 @@
 import { createReducer, on } from '@ngrx/store';
-import { MarkersState } from 'src/app/models/serverResponse.type';
+import { IObjectResponse } from 'src/app/models/serverResponse.type';
 import {
   filterMarkers,
   getMarkersError,
   getMarkersSuccess,
   selectId,
 } from './data.actions';
+
+export interface MarkersState {
+  data: IObjectResponse[];
+  filteredData: IObjectResponse[];
+  id: number;
+}
 
 export const initialState: MarkersState = {
   data: [],

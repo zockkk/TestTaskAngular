@@ -6,7 +6,7 @@ import { MapComponent } from './components/map/map.component';
 import { SidebarComponent } from './components/map/sidebar/sidebar.component';
 import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
-import { markerReduser } from './store/data/data.reduser';
+import { markerReduser } from './store/data/data.reducer';
 import { HttpClientModule } from '@angular/common/http';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { MarkerService } from './services/map.service';

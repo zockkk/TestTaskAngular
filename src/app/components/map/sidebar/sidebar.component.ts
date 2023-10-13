@@ -3,7 +3,7 @@ import { Store } from '@ngrx/store';
 import { IObjectResponse } from 'src/app/models/serverResponse.type';
 import { MarkerService } from 'src/app/services/map.service';
 import { filterMarkers, getMarkers } from 'src/app/store/data/data.actions';
-import { MarkersState } from 'src/app/models/serverResponse.type';
+import { MarkersState } from 'src/app/store/data/data.reducer';
 import * as L from 'leaflet';
 
 @Component({
@@ -14,7 +14,7 @@ import * as L from 'leaflet';
 export class SidebarComponent {
   @Input() _map: L.Map;
   tern: string = '';
-  data: IObjectResponse[] | undefined;
+  data: IObjectResponse[];
   selectedMarkerId: number;
   constructor(
     private markersStore: Store<{ markers: MarkersState }>,
