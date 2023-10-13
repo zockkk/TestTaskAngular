@@ -1,7 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { IObjectResponse } from 'src/app/models/serverResponse.type';
-import { MarkerServise } from 'src/app/services/map.service';
+import { MarkerService } from 'src/app/services/map.service';
 import { filterMarkers, getMarkers } from 'src/app/store/data/data.actions';
 import { MarkersState } from 'src/app/models/serverResponse.type';
 import * as L from 'leaflet';
@@ -18,7 +18,7 @@ export class SidebarComponent {
   selectedMarkerId: number;
   constructor(
     private markersStore: Store<{ markers: MarkersState }>,
-    private markerServise: MarkerServise
+    private markerServise: MarkerService
   ) {}
 
   onInput() {

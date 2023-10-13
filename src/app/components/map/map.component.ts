@@ -3,7 +3,7 @@ import { Store } from '@ngrx/store';
 
 import * as L from 'leaflet';
 import { IObjectResponse } from 'src/app/models/serverResponse.type';
-import { MarkerServise } from 'src/app/services/map.service';
+import { MarkerService } from 'src/app/services/map.service';
 
 const iconRetinaUrl = 'assets/images/marker-icon-2x.png';
 const iconUrl = 'assets/images/marker-icon.png';
@@ -30,7 +30,7 @@ export class MapComponent implements OnInit {
   map: L.Map;
   data: IObjectResponse[];
 
-  constructor(private markerService: MarkerServise) {}
+  constructor(private markerService: MarkerService) {}
 
   private initMap() {
     this.map = L.map('map', {

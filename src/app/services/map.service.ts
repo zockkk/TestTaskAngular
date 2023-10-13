@@ -10,7 +10,7 @@ import { selectId } from '../store/data/data.actions';
 @Injectable({
   providedIn: 'root',
 })
-export class MarkerServise {
+export class MarkerService {
   private selectedMarker: L.CircleMarker<any>;
   private apiUrl =
     'https://raw.githubusercontent.com/waliot/test-tasks/master/assets/data/frontend-1-dataset.json';
